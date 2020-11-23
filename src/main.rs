@@ -21,9 +21,7 @@ fn get_apn(id: i64, state: State<Storage>) -> Json<Option<APN>> {
 }
 
 fn rocket() -> rocket::Rocket {
-    println!("HELLO");
     let database = get_client();
-    println!("HELLO");
     let storage = Storage { database };
     rocket::ignite().mount(
         "/apn",
