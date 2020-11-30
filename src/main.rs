@@ -4,7 +4,10 @@
 
 use lib::db;
 use lib::db::get_client;
-use lib::model::{APN,Storage};
+use lib::model::{
+    APN,
+    APN_CHAIN,
+    Storage};
 use rocket::State;
 use rocket_contrib::json::Json;
 use rocket::routes;
@@ -20,11 +23,20 @@ fn get_apn(id: i64, state: State<Storage>) -> Json<Option<APN>> {
     Json(db::get_apn(id, &mut db).ok().flatten())
 }
 
+#[get("/chain/<id>")]
+fn get_apn_chain(id: i64, state: State<Storage>) -> Json<Option<APN_CHAIN>> {
+    let mut db = state.database.get().unwrap();
+    Json(db::get_apn_for_chain(id, &mut db).ok().flatten())
+}
+
 fn rocket() -> rocket::Rocket {
     let database = get_client();
     let storage = Storage { database };
     rocket::ignite().mount(
         "/apn",
-        routes![get_apn],
+        routes![
+            get_apn, 
+            get_apn_chain
+            ],
     ).manage(storage)
 }

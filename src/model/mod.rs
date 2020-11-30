@@ -18,6 +18,12 @@ pub struct APN {
     pub id: i32,
 }
 
+#[derive(Clone, Serialize, Deserialize)]
+pub struct APN_CHAIN {
+    pub apn: Option<i64>,
+    pub agency_name: Option<String>,
+}
+
 pub struct Storage {
     pub database: Pool<PostgresConnectionManager>,
 }

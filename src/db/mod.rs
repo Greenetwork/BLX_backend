@@ -7,6 +7,7 @@ use std::env;
 use openssl::ssl::*;
 
 use crate::model::APN;
+use crate::model::APN_CHAIN;
 
 pub fn get_database_url() -> String {
     env::var("PG_URL").expect("PG_URL must be set")
@@ -69,3 +70,25 @@ pub fn get_apn(identifier: i64, db: &mut Connection) -> Result<Option<APN>, Erro
     Ok(apn)
 }
 
+pub fn get_apn_for_chain(identifier: i64, db: &mut Connection) -> Result<Option<APN_CHAIN>, Error> {
+    let statement = db
+        .prepare(r#"
+            SELECT apn, agencyname
+            FROM blx_consolidated_apn where apn = $1
+            "#
+        )?;
+
+    let apn_chain: Option<APN_CHAIN> = statement.query(&[&identifier])?
+        .iter()
+        .fold(None, |_acc, row| {
+            let apn: Option<i64> = row.get("apn");
+            let agency_name: Option<String> = row.get("agencyname");
+
+            Some(APN_CHAIN {
+                apn,
+                agency_name,
+            })
+        });
+
+    Ok(apn_chain)
+}
