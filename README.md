@@ -13,10 +13,35 @@ docker run --rm -e PG_POOL_SIZE=1 -e PG_URL=postgres://databaseurl/database -p 8
 ```
 
 ## Endpoints
+when accessed return .json
 
+### [front end](https://github.com/Greenetwork/BLX_frontend) usage:
 ```
 curl localhost:8000/apn/317053
 ```
+returns =       {  
+    pub apn_chr: Option\<String>,  
+    pub apn: Option\<i64>,  
+    pub geometry: Option\<String>,  
+    pub object_id: Option\<i64>,  
+    pub agency_name: Option\<String>,  
+    pub agency_unique_id: Option\<i64>,  
+    pub dwr_revise: Option\<String>,  
+    pub region: Option\<String>,  
+    pub acres: Option\<f64>,  
+    pub county: Option\<String>,  
+    pub crop2016: Option\<String>,  
+    pub id: i32,  
+}
+
+### [chain](https://github.com/spencerbh/BLX_chain_future) usage:
+```
+curl localhost:8000/apn/chain/317053
+```
+returns =       {  
+    pub apn: Option\<i64>,  
+    pub agency_name: Option\<String>,  
+}
 
 ## How is the project setup
 
