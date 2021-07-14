@@ -7,7 +7,7 @@ docker build . -t blx_backend
 ```
 
 ## How to run via Docker
-
+make sure to replace ```postgres://databaseurl/database``` with the actual database credentials provided.
 ```
 docker run --rm -e PG_POOL_SIZE=1 -e PG_URL=postgres://databaseurl/database -p 8000:8000 blx_backend
 ```
