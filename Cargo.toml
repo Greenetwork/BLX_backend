@@ -25,6 +25,7 @@ postgres-types= { version = "0.1.1", features = ["derive"] }
 r2d2 = "0.8.8"
 r2d2_postgres = "0.14"
 dotenv = "0.15.0"
+itertools = "0.10.1"
 
 [dependencies.rocket_contrib]
 version = "0.4"

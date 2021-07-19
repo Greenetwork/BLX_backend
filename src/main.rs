@@ -23,6 +23,12 @@ fn get_apn(id: i64, state: State<Storage>) -> Json<Option<APN>> {
     Json(db::get_apn(id, &mut db).ok().flatten())
 }
 
+#[get("/list/<id_list>")]
+fn get_apn_list(id_list: String, state: State<Storage>) -> Json<Option<Vec<APN>>> {
+    let mut db = state.database.get().unwrap();
+    Json(db::get_apn_list(id_list, &mut db).ok())
+}
+
 #[get("/chain/<id>")]
 fn get_apn_chain(id: i64, state: State<Storage>) -> Json<Option<APN_CHAIN>> {
     let mut db = state.database.get().unwrap();
@@ -35,7 +41,8 @@ fn rocket() -> rocket::Rocket {
     rocket::ignite().mount(
         "/apn",
         routes![
-            get_apn, 
+            get_apn,
+            get_apn_list,
             get_apn_chain
             ],
     ).manage(storage)
