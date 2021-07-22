@@ -5,6 +5,14 @@
 ```
 docker build . -t blx_backend
 ```
+if docker fails to build because rust version is out of date replace:
+```
+RUN . $HOME/.cargo/env && rustup default nightly
+```
+with:
+```
+RUN . $HOME/.cargo/env && rustup update && rustup default nightly
+```
 
 ## How to run via Docker
 make sure to replace ```postgres://databaseurl/database``` with the actual database credentials provided.
