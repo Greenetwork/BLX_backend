@@ -6,7 +6,6 @@ use postgres::types::ToSql;
 use r2d2::{Pool, PooledConnection};
 use r2d2_postgres::{PostgresConnectionManager, TlsMode};
 use std::env;
-use itertools::join;
 
 use crate::model::APN;
 use crate::model::APN_CHAIN;
