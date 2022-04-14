@@ -100,9 +100,8 @@ pub fn get_apn_list(id_list: String, db: &mut Connection) -> Result<Vec<APN>, Er
             statement_str.push_str(",");
         }
 
-        // convert the user defined apn string to a i64
-        // apn_list.push(apn_str as &dyn ToSql);
-        apn_list.push(apn_str as &dyn ToSql);
+        // convert the user defined string which is now an i64 to a SQL friendly datatype
+          apn_list.push(apn_str as &dyn ToSql);
 
         // add to SQL statement
         statement_str.push_str("$");
