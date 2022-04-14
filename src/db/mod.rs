@@ -86,13 +86,13 @@ pub fn get_apn_list(id_list: String, db: &mut Connection) -> Result<Vec<APN>, Er
         SELECT apn_chr, apn, objectid, agencyname, agencyuniqueid,
         dwr_revise, region, apn_chr, county, crop2016, id, acres,
         ST_AsText(geometry) as geometry
-        FROM blx_consolidated_apn WHERE apn_chr IN (");
+        FROM blx_consolidated_apn WHERE apn IN (");
     // list that will be used by Postgres driver to build query
     let mut apn_list: Vec<&dyn ToSql> = Vec::new();
 
     let mut i: u8 = 1;
     let id_list_str = id_list.to_string();
-    let id_list_vec = id_list_str.split(",").collect::<Vec<&str>>();
+    let id_list_vec = id_list_str.split(",").map(|x| x.parse::<i64>().unwrap()).collect::<Vec<i64>>();
     let id_list_iter = id_list_vec.iter();
     for apn_str in id_list_iter {
         // this handles "joining" the list with commas
@@ -101,6 +101,7 @@ pub fn get_apn_list(id_list: String, db: &mut Connection) -> Result<Vec<APN>, Er
         }
 
         // convert the user defined apn string to a i64
+        // apn_list.push(apn_str as &dyn ToSql);
         apn_list.push(apn_str as &dyn ToSql);
 
         // add to SQL statement
